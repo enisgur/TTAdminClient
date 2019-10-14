@@ -64,26 +64,36 @@ export const sumbitProduct = ({
 }) => async dispatch => {
   const config = {
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'multipart/form-data'
     }
   };
 
-  const body = JSON.stringify({
-    picture,
-    category,
-    brand,
-    product,
-    description
-  });
+  // const body = JSON.stringify({
+  //   picture,
+  //   category,
+  //   brand,
+  //   product,
+  //   description
+  // });
+
+  console.log(picture);
+  const formData = new FormData();
+  formData.append('picture', picture);
+  formData.append('category', category);
+  formData.append('brand', brand);
+  formData.append('product', product);
+  formData.append('description', description);
 
   try {
-    const res = await axios.post('/api/products/submitproduct', body, config);
-
+    const res = await axios.post(
+      '/api/products/submitproduct',
+      formData,
+      config
+    );
     dispatch({
       type: SUBMITPRODUCT,
       payload: res.data
     });
-
     // dispatch(loadUser());
   } catch (err) {
     const errors = err.response.data.errors;

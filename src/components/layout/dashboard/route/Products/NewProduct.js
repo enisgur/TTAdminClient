@@ -49,7 +49,7 @@ const NewProduct = ({ categories, products, sumbitProduct, modal }) => {
     description: ''
   });
 
-  const { picture } = formData;
+  // const { picture } = formData;
   const { category } = formData;
   const { brand } = formData;
   const { product } = formData;
@@ -65,7 +65,13 @@ const NewProduct = ({ categories, products, sumbitProduct, modal }) => {
           [e.target.name]: e.target.value,
           brand: 'brand'
         });
-        // document.querySelector('#i-brand').style.display = 'block';
+        document.querySelector('.brandButton').style.display = 'inline';
+        break;
+      case 'picture':
+        setFormData({
+          ...formData,
+          picture: e.target.files[0]
+        });
         break;
 
       default:
@@ -137,7 +143,7 @@ const NewProduct = ({ categories, products, sumbitProduct, modal }) => {
           <label htmlFor="input-upload">Product Picture</label>
           <input
             type="file"
-            value={picture}
+            // value={picture}
             onChange={e => onChange(e)}
             name="picture"
             className="form-control-file"
@@ -197,8 +203,9 @@ const NewProduct = ({ categories, products, sumbitProduct, modal }) => {
               <option value="speck">Speck</option> */}
             </select>
             <button
-              style={{ float: 'right', width: '15%', display: 'inline' }}
-              className="clearfix"
+              // style={{ float: 'right', width: '15%', display: 'inline' }}
+              style={{ float: 'right', width: '15%', display: 'none' }}
+              className="clearfix brandButton"
               onClick={e => onAddBrand(e)}
             >
               Add Brand
