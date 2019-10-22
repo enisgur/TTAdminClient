@@ -7,6 +7,7 @@ import {
   USER_LOADED,
   AUTH_ERROR,
   LOGOUT,
+  GET_PRODUCTS,
   CATEGORIES,
   SUBMITPRODUCT,
   SUBMITCATEG,
@@ -54,68 +55,136 @@ export const categories = () => async dispatch => {
   }
 };
 
+// Get Products
+export const getProducts = () => async dispatch => {
+  try {
+    const res = await axios.get('/api/products/');
+
+    dispatch({
+      type: GET_PRODUCTS,
+      payload: res.data
+    });
+  } catch (err) {
+    const errors = err.response.data.errors;
+    if (errors) {
+      return console.log(errors);
+    }
+  }
+};
+
 // SUBMIT PRODUCT
 export const sumbitProduct = ({
   picture,
   category,
   brand,
   product,
-  description
+  description,
+  id,
+  edit
 }) => async dispatch => {
-  const config = {
-    headers: {
-      'Content-Type': 'multipart/form-data'
-    }
-  };
+  if (edit) {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
 
-  // const body = JSON.stringify({
-  //   picture,
-  //   category,
-  //   brand,
-  //   product,
-  //   description
-  // });
-
-  console.log(picture);
-  const formData = new FormData();
-  formData.append('picture', picture);
-  formData.append('category', category);
-  formData.append('brand', brand);
-  formData.append('product', product);
-  formData.append('description', description);
-
-  try {
-    const res = await axios.post(
-      '/api/products/submitproduct',
-      formData,
-      config
-    );
-    dispatch({
-      type: SUBMITPRODUCT,
-      payload: res.data
+    const body = JSON.stringify({
+      id,
+      category,
+      brand,
+      product,
+      description,
+      edit
     });
-    // dispatch(loadUser());
-  } catch (err) {
-    const errors = err.response.data.errors;
 
-    //   if (errors) {
-    //     errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
-    //   }
+    try {
+      const res = await axios.post('/api/products/submitproduct', body, config);
 
-    //   dispatch({
-    //     type: REGISTER_FAIL
-    //   });
-    // }
+      dispatch({
+        type: SUBMITPRODUCT,
+        payload: res.data
+      });
 
-    if (errors) {
-      // errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
-      console.log(errors);
+      dispatch(loadUser());
+    } catch (err) {
+      const errors = err.response.data.errors;
+
+      //   if (errors) {
+      //     errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
+      //   }
+
+      //   dispatch({
+      //     type: REGISTER_FAIL
+      //   });
+      // }
+
+      if (errors) {
+        // errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
+        console.log(errors);
+      }
+
+      // dispatch({
+      //   type: REGISTER_FAIL
+      // });
     }
+  } // IF EDIT END()
+  else {
+    const config = {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    };
 
-    // dispatch({
-    //   type: REGISTER_FAIL
+    // const body = JSON.stringify({
+    //   picture,
+    //   category,
+    //   brand,
+    //   product,
+    //   description
     // });
-  }
+
+    console.log('from action/products submitProduct : ', picture);
+    const formData = new FormData();
+    formData.append('picture', picture);
+    formData.append('category', category);
+    formData.append('brand', brand);
+    formData.append('product', product);
+    formData.append('description', description);
+
+    try {
+      const res = await axios.post(
+        '/api/products/submitproduct',
+        formData,
+        config
+      );
+      dispatch({
+        type: SUBMITPRODUCT,
+        payload: res.data
+      });
+      // dispatch(loadUser());
+    } catch (err) {
+      const errors = err.response.data.errors;
+
+      //   if (errors) {
+      //     errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
+      //   }
+
+      //   dispatch({
+      //     type: REGISTER_FAIL
+      //   });
+      // }
+
+      if (errors) {
+        // errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
+        console.log(errors);
+      }
+
+      // dispatch({
+      //   type: REGISTER_FAIL
+      // });
+    }
+  } // ELSE END()
 };
 // SUBMIT PRODUCT END()
 

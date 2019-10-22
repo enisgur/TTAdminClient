@@ -1,4 +1,5 @@
 import {
+  GET_PRODUCTS,
   CATEGORIES,
   SUBMITPRODUCT,
   SUBMITCATEG,
@@ -7,6 +8,7 @@ import {
 } from '../actions/types';
 
 const initialState = {
+  allProducts: null,
   categories: null,
   loading: true,
   lastSubmitProduct: null,
@@ -16,6 +18,12 @@ const initialState = {
 export default function(state = initialState, action) {
   const { type, payload } = action;
   switch (type) {
+    case GET_PRODUCTS:
+      return {
+        ...state,
+        loading: false,
+        allProducts: payload
+      };
     case CATEGORIES:
       return {
         ...state,

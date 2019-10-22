@@ -32,8 +32,9 @@
 /* MODAL */
 .dialogStyles {
   width: 500px;
-  max-width: 100%;
-  height: 500px;
+  max-width: 90%;
+  /* height: 500px; */
+  height: auto;
   margin: 0 auto;
   position: fixed;
   left: 50%;
@@ -45,6 +46,12 @@
   border-radius: 8px;
   display: flex;
   flex-direction: column;
+}
+
+.dialogStyles button[type='submit'] {
+  /* position: relative; */
+  margin-top: 20px;
+  /* bottom: 10px; */
 }
 
 .dialogStyles .closeButton {

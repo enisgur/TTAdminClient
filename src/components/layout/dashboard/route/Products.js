@@ -9,6 +9,7 @@ import { Route } from 'react-router-dom';
 // import Navbar from './Navbar';
 // import Footer from './Footer';
 import NewProduct from './Products/NewProduct';
+import ShowProducts from './Products/ShowProducts';
 
 const Products = () => {
   // if user loged in redirect to /dashboard
@@ -32,7 +33,7 @@ const Products = () => {
       case 'newproduct':
         return <NewProduct />;
       case 'cases':
-        return <div>casesssss</div>;
+        return <ShowProducts />;
 
       default:
         break;

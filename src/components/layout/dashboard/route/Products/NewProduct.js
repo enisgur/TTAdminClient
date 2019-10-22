@@ -46,7 +46,8 @@ const NewProduct = ({ categories, products, sumbitProduct, modal }) => {
     category: 'category',
     brand: 'brand',
     product: '',
-    description: ''
+    description: '',
+    edit: false
   });
 
   // const { picture } = formData;
@@ -136,7 +137,7 @@ const NewProduct = ({ categories, products, sumbitProduct, modal }) => {
   const page = (
     <Fragment>
       <h4 className="mb-3">Add New Product</h4>
-      <h1>add edit category \\\ edit brand</h1>
+      <h1 style={{ color: 'red' }}>add Success page after submit</h1>
       <hr />
       <form onSubmit={e => onSubmit(e)} className="clearfix">
         <div className="form-group">
